@@ -33,7 +33,6 @@ namespace Backend.Controllers
                 plants = JsonConvert.DeserializeObject<List<Plant>>(stream.ReadToEnd());
                 stream.Close();
             }
-            System.Diagnostics.Debug.WriteLine("here");
             return plants;
         }
 
@@ -52,10 +51,7 @@ namespace Backend.Controllers
          public List<Plant> PutDemoPlants()
          {
              List<Plant> plants = new List<Plant>();
-            // Clear the json file
-            System.IO.File.WriteAllText(PlantListFile, "");
-            //
-            
+            System.Diagnostics.Debug.WriteLine("reading");
             // Add Demo Plants
              plants.Add(new Plant { PlantId = Guid.NewGuid(), IsWatering = false, TimeSinceLastWater = DateTime.Now, PlantName = "Tomato #1" });
              plants.Add(new Plant { PlantId = Guid.NewGuid(), IsWatering = false, TimeSinceLastWater = DateTime.Now.AddHours(-6) , PlantName = "Basil #1" });

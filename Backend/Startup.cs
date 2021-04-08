@@ -26,8 +26,17 @@ namespace Backend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers().AddNewtonsoftJson();
-            
+            // https://stackoverflow.com/questions/31942037/how-to-enable-cors-in-asp-net-core
+            // allow any web application to make any type of request
+            services.AddCors(x => x.AddPolicy("allowAll", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -36,6 +45,7 @@ namespace Backend
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors("allowAll");
 
             app.UseHttpsRedirection();
 
