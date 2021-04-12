@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import Table from "react-bootstrap/Table";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
@@ -18,7 +17,7 @@ import { bindActionCreators } from "redux";
 import "./PlantList.css";
 
 function mapstateToProps(state) {
-  if (state.plants != undefined) {
+  if (state.plants !== undefined) {
     return {
       plants: state.plants,
     };

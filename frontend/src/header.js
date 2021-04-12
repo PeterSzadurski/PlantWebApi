@@ -12,8 +12,10 @@ function Header(props) {
       }}
     >
       <div>
-        <div className="innerHeader"></div>
+        <div className="innerHeader">
+        </div>
         <h1 className="headerText">Remote Watering System</h1>
+
       </div>
     </div>
   );

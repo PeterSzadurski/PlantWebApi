@@ -3,14 +3,22 @@
     height: 100px;
     position: relative;
 }
+
+[class="innerHeader"] {
+    width: 100%;
+  }
 .innerHeader{
-    width: 25%;
     height: 50%;
     background-color: orange;
     position: absolute;
     bottom: 0;
     opacity: 0.75;
+    flex-wrap:wrap;
 
+
+}
+@media only screen and (min-width: 600px) {
+    .innerHeader{width: 80%;}
 }
 .headerText{
     position: absolute;

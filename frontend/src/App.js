@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
@@ -8,7 +7,7 @@ import PlantList from "./PlantList";
 import Container from "react-bootstrap/Container";
 import Header from "./header"
 function mapstateToProps(state) {
-  if (state.plants != undefined) {
+  if (state.plants !== undefined) {
     return {
       plants: state.plants,
     };
