@@ -71,6 +71,8 @@ namespace Backend.Controllers
              plants.Add(new Plant { PlantId = Guid.NewGuid(), IsWatering = false, TimeSinceLastWater = DateTime.Now, PlantName = "Tomato #1" });
              plants.Add(new Plant { PlantId = Guid.NewGuid(), IsWatering = false, TimeSinceLastWater = DateTime.Now.AddHours(-6) , PlantName = "Basil #1" });
              plants.Add(new Plant { PlantId = Guid.NewGuid(), IsWatering = false, TimeSinceLastWater = DateTime.Now.AddMinutes(-5), PlantName = "Tomato #2" });
+             plants.Add(new Plant { PlantId = Guid.NewGuid(), IsWatering = false, TimeSinceLastWater = DateTime.Now.AddMinutes(-20), PlantName = "Cactus #1" });
+             plants.Add(new Plant { PlantId = Guid.NewGuid(), IsWatering = false, TimeSinceLastWater = DateTime.Now.AddMinutes(-30), PlantName = "Daisy #1" });
 
             UpdateJson(plants);
             //
