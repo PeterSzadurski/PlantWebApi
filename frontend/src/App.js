@@ -3,7 +3,6 @@ import logo from "./logo.svg";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import React from "react";
-import { Modal, Button, ButtonGroup } from "react-bootstrap";
 import { bindActionCreators } from "redux";
 import PlantList from "./PlantList";
 //function loadData() {
@@ -58,15 +57,6 @@ class App extends React.Component {
           <h1>plan</h1>
 
           <PlantList plants={this.props.plants}></PlantList>
-          <button
-            onClick={() => {
-              this.loadPlantHandler();
-            }}
-            type="button"
-            className="btn btn-danger float-right"
-          >
-            load plant
-          </button>
         </div>
       </div>
     );

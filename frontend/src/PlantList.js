@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import Table from "react-bootstrap/Table";
+import Button  from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { checkPlant, checkPlants } from "./Actions";
 import { bindActionCreators } from "redux";
@@ -65,6 +66,7 @@ class PlantList extends React.Component {
     const canWaterDateTime = new Date();
     canWaterDateTime.setSeconds(canWaterDateTime.getSeconds() - 30);
     return (
+        <>
       <Table striped hover variant="dark">
         <thead>
           <tr>
@@ -104,12 +106,16 @@ class PlantList extends React.Component {
                 </td>
                 <td>{plant.plantName}</td>
                 <td className={dateClass}>{waterDate.toLocaleTimeString()}</td>
-                <td>{plant.plantName}</td>
+                <td>{plant.isWatering.toString()}</td>
               </tr>
             );
           })}
         </tbody>
       </Table>
+      <Button variant="primary">
+          Water Plants
+      </Button>
+      </>
     );
   }
 }
