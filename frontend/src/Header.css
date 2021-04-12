@@ -1,31 +1,29 @@
-.outerHeader{
-    width: 100%;
-    height: 100px;
-    position: relative;
+.outerHeader {
+  width: 100%;
+  height: 100px;
+  position: relative;
 }
 
 [class="innerHeader"] {
-    width: 100%;
-  }
-.innerHeader{
-    height: 50%;
-    background-color: orange;
-    position: absolute;
-    bottom: 0;
-    opacity: 0.75;
-    flex-wrap:wrap;
-
-
+  width: 100%;
+}
+.innerHeader {
+  height: 50%;
+  background-color: orange;
+  position: absolute;
+  bottom: 0;
+  opacity: 0.75;
+  flex-wrap: wrap;
 }
 @media only screen and (min-width: 600px) {
-    .innerHeader{width: 80%;}
+  .innerHeader {
+    width: 80%;
+  }
 }
-.headerText{
-    position: absolute;
-    bottom: 0;
-    margin-left: 1rem;
-    vertical-align: bottom;
-    opacity: 1;
-
-
+.headerText {
+  position: absolute;
+  bottom: 0;
+  margin-left: 1rem;
+  vertical-align: bottom;
+  opacity: 1;
 }
