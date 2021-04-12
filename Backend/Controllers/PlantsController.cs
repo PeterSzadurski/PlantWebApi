@@ -103,7 +103,6 @@ namespace Backend.Controllers
         {
             List<Plant> plants = GetPlantListFromJson();
             ids.ToString();
-            List<Plant> plantOutput = new List<Plant>();
             foreach (var id in ids.Operations)
             {
                 var plant = plants.Where(x => x.PlantId.ToString() == id.value.ToString()).FirstOrDefault();
@@ -111,11 +110,10 @@ namespace Backend.Controllers
                 {
                     plant.IsWatering = true;
                     plant.TimeSinceLastWater = DateTime.Now;
-                    plantOutput.Add(plant);
                 }
             }
             UpdateJson(plants);
-            return Ok(plantOutput);
+            return Ok(plants);
 
         }
 

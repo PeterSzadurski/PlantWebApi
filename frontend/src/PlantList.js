@@ -2,9 +2,14 @@ import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import Table from "react-bootstrap/Table";
-import Button  from "react-bootstrap/Button";
+import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { checkPlant, checkPlants } from "./Actions";
+import {
+  checkPlant,
+  checkPlants,
+  patchWaterPlants,
+  refreshPlants,
+} from "./Actions";
 import { bindActionCreators } from "redux";
 import "./PlantList.css";
 
@@ -22,15 +27,16 @@ function mapstateToProps(state) {
   }
 }
 
-const mapDispatchToProps = (dispatch) =>
+const mapDispatchToProps = (dispatch) => 
   bindActionCreators(
     {
       checkPlantAction: checkPlant,
       checkAllPlantsAction: checkPlants,
+      waterPlantsAction: patchWaterPlants,
+      refreshPlantsAction: refreshPlants
     },
     dispatch
   );
-
 class PlantList extends React.Component {
   constructor(props) {
     super(props);
@@ -40,14 +46,27 @@ class PlantList extends React.Component {
     this.checkPlantHandler = this.checkPlantHandler.bind(this);
     this.checkAllPlantsHandler = this.checkAllPlantsHandler.bind(this);
     this.onStateFieldChange = this.onStateFieldChange.bind(this);
+    this.waterPlantsHandler = this.waterPlantsHandler.bind(this);
+  }
+
+  componentDidMount() {
+    // refesh the plants every second, pass the plants to keep the checkboxes
+    this.refreshTimer = setInterval(()=> this.props.refreshPlantsAction(this.props.plants), 1000);
+  }
+  componentWillUnmount(){
+    clearInterval(this.refreshTimer);
+    this.refreshTimer = null;
   }
 
   checkPlantHandler(plantId) {
     this.props.checkPlantAction(plantId);
   }
   checkAllPlantsHandler(canWaterDateTime) {
-      console.log("checking all plants");
+    console.log("checking all plants");
     this.props.checkAllPlantsAction(canWaterDateTime);
+  }
+  waterPlantsHandler() {
+    this.props.waterPlantsAction(this.props.plants);
   }
   onStateFieldChange(event) {
     this.setState({
@@ -56,7 +75,7 @@ class PlantList extends React.Component {
   }
 
   render() {
-      console.log("rendered");
+    console.log("rendered");
     var waterDate = "";
     var dateClass = "";
     var isCheckboxDisabled = false;
@@ -66,55 +85,63 @@ class PlantList extends React.Component {
     const canWaterDateTime = new Date();
     canWaterDateTime.setSeconds(canWaterDateTime.getSeconds() - 30);
     return (
-        <>
-      <Table striped hover variant="dark">
-        <thead>
-          <tr>
-            <th>
-              <Form.Check className="text-center" onClick={()=> {this.checkAllPlantsHandler(canWaterDateTime)}} onChange={this.onStateFieldChange}></Form.Check>
-            </th>
-            <th>Name</th>
-            <th>Last Watered</th>
-            <th>Watering Progress</th>
-          </tr>
-        </thead>
-        <tbody>
-          {this.props.plants.map((plant) => {
-            waterDate = new Date(plant.timeSinceLastWater);
-            isCheckboxDisabled = false;
-            if (needToWaterDateTime >= waterDate) {
-              dateClass = "urgentWater";
-            } else if (canWaterDateTime >= waterDate) {
-              dateClass = "canWater";
-            } else {
-              dateClass = "cannotWater";
-              isCheckboxDisabled = true;
-            }
-            return (
-              <tr key={plant.plantId}>
-                <td>
-                  <Form.Check
-                    name={plant.plantId}
-                    className="text-center"
-                    disabled={isCheckboxDisabled}
-                    onChange={this.onStateFieldChange}
-                    checked={plant.isChecked}
-                    onClick={() => {
-                      this.checkPlantHandler(plant.plantId);
-                    }}
-                  ></Form.Check>
-                </td>
-                <td>{plant.plantName}</td>
-                <td className={dateClass}>{waterDate.toLocaleTimeString()}</td>
-                <td>{plant.isWatering.toString()}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
-      <Button variant="primary">
+      <>
+        <Table striped hover variant="dark">
+          <thead>
+            <tr>
+              <th>
+                <Form.Check
+                  className="text-center"
+                  onClick={() => {
+                    this.checkAllPlantsHandler(canWaterDateTime);
+                  }}
+                  onChange={this.onStateFieldChange}
+                ></Form.Check>
+              </th>
+              <th>Name</th>
+              <th>Last Watered</th>
+              <th>Watering Progress</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.props.plants.map((plant) => {
+              waterDate = new Date(plant.timeSinceLastWater);
+              isCheckboxDisabled = false;
+              if (needToWaterDateTime >= waterDate) {
+                dateClass = "urgentWater";
+              } else if (canWaterDateTime >= waterDate) {
+                dateClass = "canWater";
+              } else {
+                dateClass = "cannotWater";
+                isCheckboxDisabled = true;
+              }
+              return (
+                <tr key={plant.plantId}>
+                  <td>
+                    <Form.Check
+                      name={plant.plantId}
+                      className="text-center"
+                      disabled={isCheckboxDisabled}
+                      onChange={this.onStateFieldChange}
+                      checked={plant.isChecked}
+                      onClick={() => {
+                        this.checkPlantHandler(plant.plantId);
+                      }}
+                    ></Form.Check>
+                  </td>
+                  <td>{plant.plantName}</td>
+                  <td className={dateClass}>
+                    {waterDate.toLocaleTimeString()}
+                  </td>
+                  <td class="progress-bar"></td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
+        <Button variant="primary" onClick={() => this.waterPlantsHandler()}>
           Water Plants
-      </Button>
+        </Button>
       </>
     );
   }
