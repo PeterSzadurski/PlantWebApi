@@ -2,8 +2,11 @@ import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import Table from "react-bootstrap/Table";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import Container from "react-bootstrap/Container";
 import {
   checkPlant,
   checkPlants,
@@ -88,75 +91,75 @@ class PlantList extends React.Component {
 
     return (
       <>
-        <Table striped hover variant="dark" size="sm">
-          <thead>
-            <tr>
-              <th className="text-center">
-                <Form.Check
-                  onClick={() => {
-                    this.checkAllPlantsHandler(canWaterDateTime);
-                  }}
-                  onChange={this.onStateFieldChange}
-                ></Form.Check>
-              </th>
-              <th className="text-left">Name</th>
-              <th className="text-left">Last Watered</th>
-              <th>Watering Progress</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.props.plants.map((plant) => {
-              // setup the progress bar
-              var waterPercent = 0;
-              if (plant.isWatering) {
-                var timeSinceLastWater = new Date(plant.timeSinceLastWater);
-                waterPercent =
-                  (Math.abs(
-                    currentDateTime.getTime() - timeSinceLastWater.getTime()
-                  ) * 0.01);
-              }
+        <Container className="plantContainer">
+          <Row className="plantHead">
+            <Col Col xs="auto">
+            <Form.Check
+                    onClick={() => {
+                      this.checkAllPlantsHandler(canWaterDateTime);
+                    }}
+                  ></Form.Check>
+            </Col>
+            <Col>
+              Plant Name
+            </Col>
+            <Col xs="auto">
+              Time Last Watered
+            </Col>
+            <Col xs="auto" class="float-left">
+              Watering Progress
+            </Col>
+          </Row>
+          {this.props.plants.map((plant) => {
+            // setup the progress bar
+            var waterPercent = 0;
+            if (plant.isWatering) {
+              var timeSinceLastWater = new Date(plant.timeSinceLastWater);
+              waterPercent =
+                Math.abs(
+                  currentDateTime.getTime() - timeSinceLastWater.getTime()
+                ) * 0.01;
+            }
 
-              waterDate = new Date(plant.timeSinceLastWater);
-              isCheckboxDisabled = false;
-              if (needToWaterDateTime >= waterDate) {
-                dateClass = "urgentWater";
-              } else if (canWaterDateTime >= waterDate) {
-                dateClass = "canWater";
-              } else {
-                dateClass = "cannotWater";
-                isCheckboxDisabled = true;
-              }
-              return (
-                <tr key={plant.plantId}>
-                  <td className="text-center">
-                    <Form.Check
-                      name={plant.plantId}
-                      disabled={isCheckboxDisabled}
-                      onChange={this.onStateFieldChange}
-                      checked={plant.isChecked}
-                      onClick={() => {
-                        this.checkPlantHandler(plant.plantId);
-                      }}
-                    ></Form.Check>
-                  </td>
-                  <td className="text-left">{plant.plantName}</td>
-                  <td className={dateClass}>
-                    {waterDate.toLocaleTimeString()}
-                  </td>
-                  <td className="align-middle progressBarOuter">
-                    <div
-                      className="progressBar"
-                      style={{ width: waterPercent + "%" }}
-                    ></div>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table>
-        <Button variant="primary" onClick={() => this.waterPlantsHandler()}>
-          Water Plants
-        </Button>
+            waterDate = new Date(plant.timeSinceLastWater);
+            isCheckboxDisabled = false;
+            if (needToWaterDateTime >= waterDate) {
+              dateClass = "urgentWater";
+            } else if (canWaterDateTime >= waterDate) {
+              dateClass = "canWater";
+            } else {
+              dateClass = "cannotWater";
+              isCheckboxDisabled = true;
+            }
+            return (
+              <Row className="plantRow" key={plant.plantId}>
+                <Col>
+                  <Form.Check
+                    name={plant.plantId}
+                    disabled={isCheckboxDisabled}
+                    onChange={this.onStateFieldChange}
+                    checked={plant.isChecked}
+                    onClick={() => {
+                      this.checkPlantHandler(plant.plantId);
+                    }}
+                  ></Form.Check>
+                </Col>
+                <Col>
+                  {plant.plantName}
+                </Col>
+                <Col xs="auto" className={dateClass + " text-left"}>
+                  {waterDate.toLocaleTimeString()}
+                </Col>
+                <Col xs="auto" className="progressBarOuter">
+                  <div className="progressBar" style={{ width: waterPercent + "%" }}></div>
+                </Col>
+              </Row>
+            );
+          })}
+          <Button variant="primary" onClick={() => this.waterPlantsHandler()}>
+            Water Plants
+          </Button>
+        </Container>
       </>
     );
   }

@@ -1,3 +1,40 @@
+
+.progressBar {
+  background-color: orange;
+  height: 100%;
+}
+.progressBarOuter {
+  height: 1rem;
+  width: 10rem;
+}
+.plantHead{
+    font-weight: bold;
+    color:whitesmoke;
+    background-color: black;
+}
+.plantContainer {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+}
+.plantContainer>.row{
+    display: grid;
+    grid-template-columns: 3rem 10rem 11rem auto;
+}
+
+.plantTable {
+  margin-bottom: 0 !important;
+}
+.plantRow{
+    color:white;
+}
+.plantRow:nth-child(even){
+    background-color:rgb(71, 71, 71);
+}
+.plantRow:nth-child(odd){
+    background-color:rgb(94, 94, 94);
+}
 .urgentWater {
     color: rgb(255, 0, 0);
   }
@@ -5,13 +42,5 @@
     color: yellow;
   }
   .cannotWater {
-      color: green;
+    color: green;
   }
-  .progressBar {
-      background-color:orange;
-      height: 100%;
-  }
-  .progressBarOuter {
-    height: 1rem;
-    width: 10rem;
-}

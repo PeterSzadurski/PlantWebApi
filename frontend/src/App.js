@@ -5,13 +5,13 @@ import { withRouter } from "react-router-dom";
 import React from "react";
 import { bindActionCreators } from "redux";
 import PlantList from "./PlantList";
-
-
+import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
 function mapstateToProps(state) {
   if (state.plants != undefined) {
     return {
-      plants: state.plants
-    }
+      plants: state.plants,
+    };
   } else {
     return {
       plants: [],
@@ -39,17 +39,14 @@ class App extends React.Component {
     this.props.loadData();
   }
 
-
   render() {
-
     return (
-      <div className="App">
+      <Container fluid>
         <div>
           <h1>plan</h1>
-
-          <PlantList plants={this.props.plants}></PlantList>
+            <PlantList plants={this.props.plants}></PlantList>
         </div>
-      </div>
+      </Container>
     );
   }
 }
