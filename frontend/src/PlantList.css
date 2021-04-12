@@ -1,0 +1,9 @@
+.urgentWater {
+    color: rgb(255, 0, 0);
+  }
+  .canWater {
+    color: yellow;
+  }
+  .cannotWater {
+      color: green;
+  }

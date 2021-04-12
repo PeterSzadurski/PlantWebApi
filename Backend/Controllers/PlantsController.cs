@@ -27,6 +27,7 @@ namespace Backend.Controllers
         [HttpGet("GetPlantListFromJson")]
         public List<Plant> GetPlantListFromJson()
         {
+            System.Diagnostics.Debug.WriteLine("getting list");
             List<Plant> plants;
             using (var stream = System.IO.File.OpenText(PlantListFile))
             {
