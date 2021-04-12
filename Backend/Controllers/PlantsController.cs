@@ -71,8 +71,7 @@ namespace Backend.Controllers
              plants.Add(new Plant { PlantId = Guid.NewGuid(), IsWatering = false, TimeSinceLastWater = DateTime.Now.AddHours(-6) , PlantName = "Basil #1" });
              plants.Add(new Plant { PlantId = Guid.NewGuid(), IsWatering = false, TimeSinceLastWater = DateTime.Now.AddMinutes(-5), PlantName = "Tomato #2" });
 
-            string json = JsonConvert.SerializeObject(plants);
-            System.IO.File.WriteAllText(PlantListFile, json);
+            UpdateJson(plants);
             //
             return plants;
          }
@@ -91,25 +90,8 @@ namespace Backend.Controllers
                 return 200;
             }
         }
+      
 
-        [HttpPatch("PatchWaterPlant")]
-        public IActionResult PatchWaterPlant(Guid id)
-        {
-            List<Plant> plants = GetPlantListFromJson();
-            var plant = plants.Where(x => x.PlantId == id).FirstOrDefault();
-            int plantResult = WaterPlant(plant);
-            if (plantResult != 200)
-            {
-                return StatusCode(plantResult);
-            }
-            else
-            {
-                plant.IsWatering = true;
-                plant.TimeSinceLastWater = DateTime.Now;
-                UpdateJson(plants);
-                return Ok(plant);
-            }
-        }
 
         [HttpPatch("PatchWaterPlants")]
         public IActionResult PatchWaterPlants(JsonPatchDocument<string> ids)
