@@ -14,7 +14,6 @@ import { bindActionCreators } from "redux";
 import "./PlantList.css";
 
 function mapstateToProps(state) {
-  console.log("mapped");
   if (state.plants != undefined) {
     return {
       plants: state.plants,
@@ -65,7 +64,6 @@ class PlantList extends React.Component {
     this.props.checkPlantAction(plantId);
   }
   checkAllPlantsHandler(canWaterDateTime) {
-    console.log("checking all plants");
     this.props.checkAllPlantsAction(canWaterDateTime);
   }
   waterPlantsHandler() {
@@ -110,11 +108,12 @@ class PlantList extends React.Component {
             {this.props.plants.map((plant) => {
               // setup the progress bar
               var waterPercent = 0;
-              if(plant.isWatering){
+              if (plant.isWatering) {
                 var timeSinceLastWater = new Date(plant.timeSinceLastWater);
-                console.log("test date: " + timeSinceLastWater.getSeconds());
-                console.log("test date: 2" + currentDateTime.getSeconds());
-                waterPercent = (currentDateTime.getSeconds() - timeSinceLastWater.getSeconds()) * 10;
+                waterPercent =
+                  (Math.abs(
+                    currentDateTime.getTime() - timeSinceLastWater.getTime()
+                  ) * 0.01);
               }
 
               waterDate = new Date(plant.timeSinceLastWater);

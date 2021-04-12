@@ -5,17 +5,10 @@ import { withRouter } from "react-router-dom";
 import React from "react";
 import { bindActionCreators } from "redux";
 import PlantList from "./PlantList";
-//function loadData() {
-//  console.log("dispatch");
-//  store.dispatch({
-//    type: ActionEnum.LOAD_PLANTS,
-//  });
-//}
+
 
 function mapstateToProps(state) {
-  console.log("mapped");
   if (state.plants != undefined) {
-    console.log("pant confirm");
     return {
       plants: state.plants
     }
@@ -48,9 +41,7 @@ class App extends React.Component {
 
 
   render() {
-    console.log("rednering");
-    //console.log("plants length: " + this.props.Plants.length);
-    // const renderPlants = this.state.Plants;
+
     return (
       <div className="App">
         <div>

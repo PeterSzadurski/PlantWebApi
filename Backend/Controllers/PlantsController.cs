@@ -34,6 +34,19 @@ namespace Backend.Controllers
                 plants = JsonConvert.DeserializeObject<List<Plant>>(stream.ReadToEnd());
                 stream.Close();
             }
+            // make sure the isWatering is up to date
+            DateTime date = DateTime.Now;
+            foreach(var p  in plants)
+            {
+                if (p.IsWatering)
+                {
+                    if ((date - p.TimeSinceLastWater).TotalSeconds > 10) {
+                        p.IsWatering = false;
+                    }
+                }
+            }
+            UpdateJson(plants);
+
             return plants;
         }
 

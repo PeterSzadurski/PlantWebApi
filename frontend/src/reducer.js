@@ -12,8 +12,6 @@ const initialState = {
 };
 
 export function reducer(state = initialState, action) {
-  console.log("reducer");
-
   switch (action.type) {
     case LOAD_PLANTS_SUCCESS: {
       const plants = [];
@@ -33,6 +31,7 @@ export function reducer(state = initialState, action) {
       });
     }
     case REFRESH_PLANTS_SUCCESS: {
+      const currentDate = new Date();
       const plants = [];
       for (var i = 0; i < action.payload.plants.data.length; i++) {
         const plant = new Plant();
@@ -40,9 +39,10 @@ export function reducer(state = initialState, action) {
         plant.plantName = action.payload.plants.data[i].plantName;
         plant.timeSinceLastWater =
           action.payload.plants.data[i].timeSinceLastWater;
+
         plant.isWatering = action.payload.plants.data[i].isWatering;
-        //const checkTrue = (action.oldPlants[i].isChecked == 'true');
         plant.isChecked = action.oldPlants[i].isChecked;
+
         plants.push(plant);
       }
       return Object.assign({}, state, {
