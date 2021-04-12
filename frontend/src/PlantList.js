@@ -94,21 +94,15 @@ class PlantList extends React.Component {
         <Container className="plantContainer" fluid>
           <Row className="plantHead">
             <Col xs="auto">
-            <Form.Check
-                    onClick={() => {
-                      this.checkAllPlantsHandler(canWaterDateTime);
-                    }}
-                  ></Form.Check>
+              <Form.Check
+                onClick={() => {
+                  this.checkAllPlantsHandler(canWaterDateTime);
+                }}
+              ></Form.Check>
             </Col>
-            <Col>
-              Plant Name
-            </Col>
-            <Col xs="auto">
-              Time Last Watered
-            </Col>
-            <Col className="float-left">
-              Watering Progress
-            </Col>
+            <Col>Plant Name</Col>
+            <Col xs="auto">Time Last Watered</Col>
+            <Col className="float-left">Watering Progress</Col>
           </Row>
           {this.props.plants.map((plant) => {
             // setup the progress bar
@@ -144,15 +138,21 @@ class PlantList extends React.Component {
                     }}
                   ></Form.Check>
                 </Col>
-                <Col>
-                  {plant.plantName}
-                </Col>
+                <Col>{plant.plantName}</Col>
                 <Col xs="auto" className={dateClass + " text-left"}>
                   {waterDate.toLocaleTimeString()}
                 </Col>
-                <Col className="progressBarOuter">
-                  <div className="progressBar" style={{ width: waterPercent + "%" }}></div>
-                </Col>
+                <Row>
+                  <Col xs={9} className="progressBarOuter">
+                    <div
+                      className="progressBar"
+                      style={{ width: waterPercent + "%" }}
+                    ></div>
+                  </Col>
+                  <Col xs={3} hidden={!plant.isWatering}>
+                    <Button variant="danger" size="sm">Cancel Watering</Button>
+                  </Col>
+                </Row>
               </Row>
             );
           })}
