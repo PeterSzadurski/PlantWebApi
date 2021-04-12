@@ -44,9 +44,9 @@ class PlantList extends React.Component {
   checkPlantHandler(plantId) {
     this.props.checkPlantAction(plantId);
   }
-  checkAllPlantsHandler() {
+  checkAllPlantsHandler(canWaterDateTime) {
       console.log("checking all plants");
-    this.props.checkAllPlantsAction();
+    this.props.checkAllPlantsAction(canWaterDateTime);
   }
   onStateFieldChange(event) {
     this.setState({
@@ -69,7 +69,7 @@ class PlantList extends React.Component {
         <thead>
           <tr>
             <th>
-              <Form.Check className="text-center" onClick={()=> {this.checkAllPlantsHandler()}} onChange={this.onStateFieldChange}></Form.Check>
+              <Form.Check className="text-center" onClick={()=> {this.checkAllPlantsHandler(canWaterDateTime)}} onChange={this.onStateFieldChange}></Form.Check>
             </th>
             <th>Name</th>
             <th>Last Watered</th>

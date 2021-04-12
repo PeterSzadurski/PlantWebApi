@@ -15,12 +15,6 @@ import {reducer} from './reducer';
 import { putInitPlants } from "./Actions";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const initialState = {
-  waiting: false,
-  plants: [],
-  responseCode: -1
-};
-
 // setup debug tools
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || Redux.compose;
 

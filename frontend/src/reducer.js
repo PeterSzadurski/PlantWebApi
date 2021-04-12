@@ -47,10 +47,11 @@ export function reducer(state = initialState, action) {
         return state;
       }
     case CHECK_PLANTS:
-      console.log("checking plants")
       for (var i = 0; i < state.plants.length; i++) {
-          state.plants[i].isChecked = !state.plants[i].isChecked;
-        
+        const waterDate = new Date(state.plants[i].timeSinceLastWater);
+        if(action.payload >=waterDate){
+        state.plants[i].isChecked = !state.plants[i].isChecked;
+        }
       }
       return state;
 

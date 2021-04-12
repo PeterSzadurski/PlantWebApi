@@ -16,9 +16,9 @@ const checkPlantSucess = plantId  => ({
     type: CHECK_PLANT,
     payload: plantId
 });
-const checkPlantsSucess = plantIds  => ({
+const checkPlantsSucess = canWaterDateTime  => ({
     type: CHECK_PLANTS,
-    payload: plantIds
+    payload: canWaterDateTime
 });
 
 export const fetchPlants  = () => {
@@ -43,9 +43,9 @@ export const checkPlant = (plantId) => {
     }
 }
 
-export const checkPlants = () => {
+export const checkPlants = (canWaterDateTime) => {
     return  dispatch => {
-        dispatch(checkPlantsSucess());
+        dispatch(checkPlantsSucess(canWaterDateTime));
     }
 }
 
