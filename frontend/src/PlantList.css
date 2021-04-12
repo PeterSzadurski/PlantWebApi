@@ -5,7 +5,7 @@
 }
 .progressBarOuter {
   height: 1rem;
-  width: 10rem;
+  width: 100%;
 }
 .plantHead{
     font-weight: bold;

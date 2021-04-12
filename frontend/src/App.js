@@ -1,12 +1,12 @@
 import logo from "./logo.svg";
-//import "./App.css";
+import "./App.css";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import React from "react";
 import { bindActionCreators } from "redux";
 import PlantList from "./PlantList";
 import Container from "react-bootstrap/Container";
-import Col from "react-bootstrap/Col";
+import Header from "./header"
 function mapstateToProps(state) {
   if (state.plants != undefined) {
     return {
@@ -41,11 +41,9 @@ class App extends React.Component {
 
   render() {
     return (
-      <Container fluid>
-        <div>
-          <h1>plan</h1>
-            <PlantList plants={this.props.plants}></PlantList>
-        </div>
+      <Container fluid className="noMargin App">
+      <Header></Header>
+        <PlantList plants={this.props.plants}></PlantList>
       </Container>
     );
   }

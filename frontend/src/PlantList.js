@@ -91,9 +91,9 @@ class PlantList extends React.Component {
 
     return (
       <>
-        <Container className="plantContainer">
+        <Container className="plantContainer" fluid>
           <Row className="plantHead">
-            <Col Col xs="auto">
+            <Col xs="auto">
             <Form.Check
                     onClick={() => {
                       this.checkAllPlantsHandler(canWaterDateTime);
@@ -106,7 +106,7 @@ class PlantList extends React.Component {
             <Col xs="auto">
               Time Last Watered
             </Col>
-            <Col xs="auto" class="float-left">
+            <Col className="float-left">
               Watering Progress
             </Col>
           </Row>
@@ -150,13 +150,13 @@ class PlantList extends React.Component {
                 <Col xs="auto" className={dateClass + " text-left"}>
                   {waterDate.toLocaleTimeString()}
                 </Col>
-                <Col xs="auto" className="progressBarOuter">
+                <Col className="progressBarOuter">
                   <div className="progressBar" style={{ width: waterPercent + "%" }}></div>
                 </Col>
               </Row>
             );
           })}
-          <Button variant="primary" onClick={() => this.waterPlantsHandler()}>
+          <Button variant="light" onClick={() => this.waterPlantsHandler()}>
             Water Plants
           </Button>
         </Container>
