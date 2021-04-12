@@ -41,8 +41,7 @@ export function reducer(state = initialState, action) {
         plant.timeSinceLastWater =
           action.payload.plants.data[i].timeSinceLastWater;
         plant.isWatering = action.payload.plants.data[i].isWatering;
-        console.log(action.oldPlants[i].isChecked);
-        const checkTrue = (action.oldPlants[i].isChecked == 'true');
+        //const checkTrue = (action.oldPlants[i].isChecked == 'true');
         plant.isChecked = action.oldPlants[i].isChecked;
         plants.push(plant);
       }

@@ -8,5 +8,10 @@
       color: green;
   }
   .progressBar {
-      background-color:lightskyblue;
+      background-color:orange;
+      height: 100%;
   }
+  .progressBarOuter {
+    height: 1rem;
+    width: 10rem;
+}

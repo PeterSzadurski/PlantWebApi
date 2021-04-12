@@ -27,13 +27,13 @@ function mapstateToProps(state) {
   }
 }
 
-const mapDispatchToProps = (dispatch) => 
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       checkPlantAction: checkPlant,
       checkAllPlantsAction: checkPlants,
       waterPlantsAction: patchWaterPlants,
-      refreshPlantsAction: refreshPlants
+      refreshPlantsAction: refreshPlants,
     },
     dispatch
   );
@@ -51,9 +51,12 @@ class PlantList extends React.Component {
 
   componentDidMount() {
     // refesh the plants every second, pass the plants to keep the checkboxes
-    this.refreshTimer = setInterval(()=> this.props.refreshPlantsAction(this.props.plants), 1000);
+    this.refreshTimer = setInterval(
+      () => this.props.refreshPlantsAction(this.props.plants),
+      1000
+    );
   }
-  componentWillUnmount(){
+  componentWillUnmount() {
     clearInterval(this.refreshTimer);
     this.refreshTimer = null;
   }
@@ -75,7 +78,6 @@ class PlantList extends React.Component {
   }
 
   render() {
-    console.log("rendered");
     var waterDate = "";
     var dateClass = "";
     var isCheckboxDisabled = false;
@@ -84,27 +86,37 @@ class PlantList extends React.Component {
     needToWaterDateTime.setHours(needToWaterDateTime.getHours() - 6);
     const canWaterDateTime = new Date();
     canWaterDateTime.setSeconds(canWaterDateTime.getSeconds() - 30);
+    const currentDateTime = new Date();
+
     return (
       <>
-        <Table striped hover variant="dark">
+        <Table striped hover variant="dark" size="sm">
           <thead>
             <tr>
-              <th>
+              <th className="text-center">
                 <Form.Check
-                  className="text-center"
                   onClick={() => {
                     this.checkAllPlantsHandler(canWaterDateTime);
                   }}
                   onChange={this.onStateFieldChange}
                 ></Form.Check>
               </th>
-              <th>Name</th>
-              <th>Last Watered</th>
+              <th className="text-left">Name</th>
+              <th className="text-left">Last Watered</th>
               <th>Watering Progress</th>
             </tr>
           </thead>
           <tbody>
             {this.props.plants.map((plant) => {
+              // setup the progress bar
+              var waterPercent = 0;
+              if(plant.isWatering){
+                var timeSinceLastWater = new Date(plant.timeSinceLastWater);
+                console.log("test date: " + timeSinceLastWater.getSeconds());
+                console.log("test date: 2" + currentDateTime.getSeconds());
+                waterPercent = (currentDateTime.getSeconds() - timeSinceLastWater.getSeconds()) * 10;
+              }
+
               waterDate = new Date(plant.timeSinceLastWater);
               isCheckboxDisabled = false;
               if (needToWaterDateTime >= waterDate) {
@@ -117,10 +129,9 @@ class PlantList extends React.Component {
               }
               return (
                 <tr key={plant.plantId}>
-                  <td>
+                  <td className="text-center">
                     <Form.Check
                       name={plant.plantId}
-                      className="text-center"
                       disabled={isCheckboxDisabled}
                       onChange={this.onStateFieldChange}
                       checked={plant.isChecked}
@@ -129,11 +140,16 @@ class PlantList extends React.Component {
                       }}
                     ></Form.Check>
                   </td>
-                  <td>{plant.plantName}</td>
+                  <td className="text-left">{plant.plantName}</td>
                   <td className={dateClass}>
                     {waterDate.toLocaleTimeString()}
                   </td>
-                  <td class="progress-bar"></td>
+                  <td className="align-middle progressBarOuter">
+                    <div
+                      className="progressBar"
+                      style={{ width: waterPercent + "%" }}
+                    ></div>
+                  </td>
                 </tr>
               );
             })}
