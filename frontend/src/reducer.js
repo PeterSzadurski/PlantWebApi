@@ -11,6 +11,7 @@ const initialState = {
   responseCode: -1,
 };
 
+
 export function reducer(state = initialState, action) {
   switch (action.type) {
     case LOAD_PLANTS_SUCCESS: {
@@ -23,7 +24,8 @@ export function reducer(state = initialState, action) {
           action.payload.plants.data[i].timeSinceLastWater;
         plant.isWatering = action.payload.plants.data[i].isWatering;
         plant.isChecked = false;
-        plant.startTimeOfCurrentWater = action.payload.plants.data[i].startTimeOfCurrentWater;
+        plant.startTimeOfCurrentWater =
+          action.payload.plants.data[i].startTimeOfCurrentWater;
         plants.push(plant);
       }
       return Object.assign({}, state, {
@@ -32,7 +34,6 @@ export function reducer(state = initialState, action) {
       });
     }
     case REFRESH_PLANTS_SUCCESS: {
-      const currentDate = new Date();
       const plants = [];
       for (var i = 0; i < action.payload.plants.data.length; i++) {
         const plant = new Plant();
@@ -40,7 +41,8 @@ export function reducer(state = initialState, action) {
         plant.plantName = action.payload.plants.data[i].plantName;
         plant.timeSinceLastWater =
           action.payload.plants.data[i].timeSinceLastWater;
-          plant.startTimeOfCurrentWater = action.payload.plants.data[i].startTimeOfCurrentWater;
+        plant.startTimeOfCurrentWater =
+          action.payload.plants.data[i].startTimeOfCurrentWater;
         plant.isWatering = action.payload.plants.data[i].isWatering;
         plant.isChecked = action.oldPlants[i].isChecked;
 

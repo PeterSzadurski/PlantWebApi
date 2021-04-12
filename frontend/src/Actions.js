@@ -8,6 +8,7 @@ export const CHECK_PLANT = 4;
 export const CHECK_PLANTS = 6;
 export const REFRESH_PLANTS = 7;
 export const REFRESH_PLANTS_SUCCESS = 8;
+//export const CANCEL_WATER = 9;
 
 const fetchPlantsSuccess = (plants) => ({
   type: LOAD_PLANTS_SUCCESS,
@@ -32,6 +33,7 @@ const checkPlantsSucess = (canWaterDateTime) => ({
 });
 
 
+
 export const fetchPlants = () => {
   return async (dispatch) => {
     let plants = await axios.get(API_URL + "/Plants/GetPlantListFromJson");
@@ -42,6 +44,13 @@ export const fetchPlants = () => {
 export const refreshPlants = (oldPlants) => {
     return async (dispatch) => {
       let plants = await axios.get(API_URL + "/Plants/GetPlantListFromJson");
+      dispatch(refreshPlantsSuccess(oldPlants,plants));
+    };
+  };
+
+  export const cancelWater = (oldPlants,plantId) => {
+    return async (dispatch) => {
+      let plants = await axios.patch(API_URL + "/Plants/PatchCancelWater?plantId=" + plantId);
       dispatch(refreshPlantsSuccess(oldPlants,plants));
     };
   };

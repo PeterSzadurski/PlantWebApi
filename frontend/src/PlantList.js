@@ -12,6 +12,7 @@ import {
   checkPlants,
   patchWaterPlants,
   refreshPlants,
+  cancelWater
 } from "./Actions";
 import { bindActionCreators } from "redux";
 import "./PlantList.css";
@@ -36,6 +37,7 @@ const mapDispatchToProps = (dispatch) =>
       checkAllPlantsAction: checkPlants,
       waterPlantsAction: patchWaterPlants,
       refreshPlantsAction: refreshPlants,
+      cancelWaterAction: cancelWater
     },
     dispatch
   );
@@ -49,6 +51,7 @@ class PlantList extends React.Component {
     this.checkAllPlantsHandler = this.checkAllPlantsHandler.bind(this);
     this.onStateFieldChange = this.onStateFieldChange.bind(this);
     this.waterPlantsHandler = this.waterPlantsHandler.bind(this);
+    this.cancelWaterHandler = this.cancelWaterHandler.bind(this);
   }
 
   componentDidMount() {
@@ -71,6 +74,9 @@ class PlantList extends React.Component {
   }
   waterPlantsHandler() {
     this.props.waterPlantsAction(this.props.plants);
+  }
+  cancelWaterHandler(plantId) {
+    this.props.cancelWaterAction(this.props.plants, plantId);
   }
   onStateFieldChange(event) {
     this.setState({
@@ -151,7 +157,7 @@ class PlantList extends React.Component {
                     ></div>
                   </Col>
                   <Col xs={3} hidden={!plant.isWatering}>
-                    <Button variant="danger" size="sm">Cancel Watering</Button>
+                    <Button variant="danger" size="sm" onClick={() => this.cancelWaterHandler(plant.plantId)}>Cancel Watering</Button>
                   </Col>
                 </Row>
               </Row>
