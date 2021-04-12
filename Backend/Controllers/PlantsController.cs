@@ -40,8 +40,9 @@ namespace Backend.Controllers
             {
                 if (p.IsWatering)
                 {
-                    if ((date - p.TimeSinceLastWater).TotalSeconds > 10) {
+                    if ((date - p.StartTimeOfCurrentWater).TotalSeconds > 10) {
                         p.IsWatering = false;
+                        p.TimeSinceLastWater = p.StartTimeOfCurrentWater;
                     }
                 }
             }
@@ -92,6 +93,18 @@ namespace Backend.Controllers
         }
       
 
+        [HttpPatch("PatchCancelWater")]
+        public IActionResult PatchCancelWater(string plantId)
+        {
+            List<Plant> plants = GetPlantListFromJson();
+            var plant = plants.Where(x => x.PlantId.ToString() == plantId).FirstOrDefault();
+            plant.IsWatering = false;
+            plant.StartTimeOfCurrentWater = plant.TimeSinceLastWater;
+            UpdateJson(plants);
+            return Ok(plants);
+
+        }
+
 
         [HttpPatch("PatchWaterPlants")]
         public IActionResult PatchWaterPlants(JsonPatchDocument<string> ids)
@@ -102,9 +115,9 @@ namespace Backend.Controllers
             {
                 var plant = plants.Where(x => x.PlantId.ToString() == id.value.ToString()).FirstOrDefault();
                 if(WaterPlant(plant) == 200)
-                {
+                {   
                     plant.IsWatering = true;
-                    plant.TimeSinceLastWater = DateTime.Now;
+                    plant.StartTimeOfCurrentWater = DateTime.Now;
                 }
             }
             UpdateJson(plants);

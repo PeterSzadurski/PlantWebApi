@@ -4,4 +4,5 @@
     timeSinceLastWater;
     isWatering;
     isChecked;
+    startTimeOfCurrentWater;
 }

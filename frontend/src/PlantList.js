@@ -108,23 +108,24 @@ class PlantList extends React.Component {
             // setup the progress bar
             var waterPercent = 0;
             if (plant.isWatering) {
-              var timeSinceLastWater = new Date(plant.timeSinceLastWater);
+              var timeSinceLastWater = new Date(plant.startTimeOfCurrentWater);
               waterPercent =
                 Math.abs(
                   currentDateTime.getTime() - timeSinceLastWater.getTime()
                 ) * 0.01;
             }
-
             waterDate = new Date(plant.timeSinceLastWater);
             isCheckboxDisabled = false;
             if (needToWaterDateTime >= waterDate) {
               dateClass = "urgentWater";
-            } else if (canWaterDateTime >= waterDate) {
-              dateClass = "canWater";
-            } else {
+            }
+            else if ((waterDate > canWaterDateTime) || plant.isWatering) {
               dateClass = "cannotWater";
               isCheckboxDisabled = true;
             }
+            else if (canWaterDateTime >= waterDate) {
+              dateClass = "canWater";
+            } 
             return (
               <Row className="plantRow" key={plant.plantId}>
                 <Col>

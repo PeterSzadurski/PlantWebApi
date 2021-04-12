@@ -15,6 +15,8 @@ namespace Backend.Models
         public string PlantName { get; set; }
         [JsonPropertyName("TimeSinceLastWater")]
         public DateTime TimeSinceLastWater { get; set; }
+        [JsonPropertyName("StartTimeOfCurrentWater")]
+        public DateTime StartTimeOfCurrentWater { get; set; }
         [JsonPropertyName("IsWatering")]
         public bool IsWatering { get; set; }
     }

@@ -23,6 +23,7 @@ export function reducer(state = initialState, action) {
           action.payload.plants.data[i].timeSinceLastWater;
         plant.isWatering = action.payload.plants.data[i].isWatering;
         plant.isChecked = false;
+        plant.startTimeOfCurrentWater = action.payload.plants.data[i].startTimeOfCurrentWater;
         plants.push(plant);
       }
       return Object.assign({}, state, {
@@ -39,7 +40,7 @@ export function reducer(state = initialState, action) {
         plant.plantName = action.payload.plants.data[i].plantName;
         plant.timeSinceLastWater =
           action.payload.plants.data[i].timeSinceLastWater;
-
+          plant.startTimeOfCurrentWater = action.payload.plants.data[i].startTimeOfCurrentWater;
         plant.isWatering = action.payload.plants.data[i].isWatering;
         plant.isChecked = action.oldPlants[i].isChecked;
 
